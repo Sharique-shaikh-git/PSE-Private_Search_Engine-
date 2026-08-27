@@ -91,19 +91,12 @@ outgoing:
   max_redirects: 30
   retries: 2
 
-  # --- TOR PROXY (uncomment for maximum privacy) ---
-  # To use Tor, uncomment the lines below:
-  # using_tor_proxy: true
-  # extra_proxy_timeout: 10.0
-  # proxies:
-  #   all://:
-  #     - socks5://127.0.0.1:9050
-
-  # --- CUSTOM PROXY (uncomment to route through proxy) ---
-  # proxies:
-  #   all://:
-  #     - http://proxy1:8080
-  #     - socks5://proxy2:1080
+  # --- TOR PROXY (all searches routed through Tor) ---
+  using_tor_proxy: true
+  extra_proxy_timeout: 10.0
+  proxies:
+    all://:
+      - socks5://tor:9050
 
 # ============================================
 # BUILT-IN PLUGINS
@@ -143,7 +136,7 @@ plugins:
 
   # Tor check - detect Tor connections
   searx.plugins.tor_check.SXNGPlugin:
-    active: false                  # Enable when using Tor
+    active: true
 
   # OA DOI rewrite - academic paper DOI links
   searx.plugins.oa_doi_rewrite.SXNGPlugin:
