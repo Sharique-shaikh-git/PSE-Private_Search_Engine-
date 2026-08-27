@@ -1,0 +1,165 @@
+# ============================================
+# PSE - Private Search Engine
+# SearXNG Configuration
+# ============================================
+
+use_default_settings: true
+
+# ============================================
+# GENERAL SETTINGS
+# ============================================
+general:
+  instance_name: "PSE - Private Search Engine"
+  privacypolicy_url: false
+  donation_url: false
+  contact_url: false
+  enable_metrics: true
+  open_metrics: ""
+  debug: false
+
+# ============================================
+# SEARCH SETTINGS
+# ============================================
+search:
+  safe_search: 0                    # 0=off, 1=moderate, 2=strict
+  autocomplete: "duckduckgo"       # DuckDuckGo autocomplete (privacy-friendly)
+  favicon_resolver: ""
+  default_lang: "en"
+  ban_time_on_fail: 5
+  max_page: 0
+  max_ban_time_on_fail: 120
+  suspended_times:
+    SearxEngineAccessDenied: 86400
+    SearxEngineCaptcha: 86400
+    SearxEngineTooManyRequests: 3600
+  formats:
+    - html
+    - json
+    - rss
+
+# ============================================
+# SERVER SETTINGS
+# ============================================
+server:
+  base_url: http://localhost:8080/
+  port: 8080
+  bind_address: "0.0.0.0"
+  secret_key: "085496e0f3262edfd5ff2473b3a17f792ae956b681e2938b3a710dbae526a21d"
+  method: "GET"                     # GET fixes browser back-button issues
+  limiter: false
+  public_instance: false            # Private instance - no need for public features
+  image_proxy: true                 # Proxy images through SearXNG for privacy
+  default_http_headers:
+    X-Content-Type-Options: nosniff
+    X-Download-Options: noopen
+    X-Robots-Tag: noindex, nofollow
+    Referrer-Policy: no-referrer
+
+# ============================================
+# UI SETTINGS
+# ============================================
+ui:
+  default_locale: ""
+  query_in_title: false            # Privacy: don't put search query in page title
+  center_alignment: false
+  cache_url: "https://web.archive.org/web/"
+  default_theme: simple
+  theme_args:
+    simple_style: "dark"           # Dark theme for modern look
+  results_on_new_tab: false
+  search_on_category_select: true
+  hotkeys: default
+  url_formatting: pretty
+
+# ============================================
+# REDIS/VALKEY SETTINGS
+# ============================================
+redis:
+  url: "redis://valkey:6379/0"
+
+# ============================================
+# OUTGOING REQUESTS (Proxy & Tor)
+# ============================================
+outgoing:
+  request_timeout: 3.0             # Default timeout in seconds
+  max_request_timeout: 10.0        # Maximum allowed timeout
+  useragent_suffix: ""
+  pool_connections: 100
+  pool_maxsize: 20
+  enable_http2: true
+  keepalive_expiry: 5.0
+  max_redirects: 30
+  retries: 2
+
+  # --- TOR PROXY (uncomment for maximum privacy) ---
+  # To use Tor, uncomment the lines below:
+  # using_tor_proxy: true
+  # extra_proxy_timeout: 10.0
+  # proxies:
+  #   all://:
+  #     - socks5://127.0.0.1:9050
+
+  # --- CUSTOM PROXY (uncomment to route through proxy) ---
+  # proxies:
+  #   all://:
+  #     - http://proxy1:8080
+  #     - socks5://proxy2:1080
+
+# ============================================
+# BUILT-IN PLUGINS
+# ============================================
+plugins:
+  # Calculator plugin - evaluate math expressions in search
+  searx.plugins.calculator.SXNGPlugin:
+    active: true
+
+  # Infinite scroll - lazy load results
+  searx.plugins.infinite_scroll.SXNGPlugin:
+    active: true
+
+  # Hash plugin - compute hash values in search
+  searx.plugins.hash_plugin.SXNGPlugin:
+    active: true
+
+  # Self-info - check what websites know about you
+  searx.plugins.self_info.SXNGPlugin:
+    active: true
+
+  # Tracker URL remover - strip tracking parameters from URLs
+  searx.plugins.tracker_url_remover.SXNGPlugin:
+    active: true
+
+  # Unit converter - convert units in search
+  searx.plugins.unit_converter.SXNGPlugin:
+    active: true
+
+  # Ahmia filter - filter .onion results
+  searx.plugins.ahmia_filter.SXNGPlugin:
+    active: true
+
+  # Hostname plugin - custom hostname rules
+  searx.plugins.hostnames.SXNGPlugin:
+    active: true
+
+  # Tor check - detect Tor connections
+  searx.plugins.tor_check.SXNGPlugin:
+    active: false                  # Enable when using Tor
+
+  # OA DOI rewrite - academic paper DOI links
+  searx.plugins.oa_doi_rewrite.SXNGPlugin:
+    active: true
+
+# ============================================
+# SEARCH CATEGORIES (tabs in the UI)
+# ============================================
+categories_as_tabs:
+  general:
+  images:
+  videos:
+  news:
+  map:
+  music:
+  it:
+  science:
+  files:
+  social media:
