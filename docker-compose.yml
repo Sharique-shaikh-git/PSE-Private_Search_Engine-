@@ -18,6 +18,7 @@ services:
     volumes:
       - ./searxng:/etc/searxng:rw
       - ./searxng/static/themes/simple/img/searxng.svg:/usr/local/searxng/searx/static/themes/simple/img/searxng.svg:ro
+      - ./searxng/static/themes/simple/img/searxng.png:/usr/local/searxng/searx/static/themes/simple/img/searxng.png:ro
       - ./searxng/static/themes/simple/img/favicon.svg:/usr/local/searxng/searx/static/themes/simple/img/favicon.svg:ro
       - ./searxng/searxng-wordmark.min.svg:/usr/local/searxng/searx/templates/simple/searxng-wordmark.min.svg:ro
       - ./searxng/templates/simple/base.html:/usr/local/searxng/searx/templates/simple/base.html:ro
