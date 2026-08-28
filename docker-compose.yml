@@ -19,6 +19,10 @@ services:
       - ./searxng:/etc/searxng:rw
       - ./searxng/static/themes/simple/img/searxng.svg:/usr/local/searxng/searx/static/themes/simple/img/searxng.svg:ro
       - ./searxng/static/themes/simple/img/favicon.svg:/usr/local/searxng/searx/static/themes/simple/img/favicon.svg:ro
+      - ./searxng/searxng-wordmark.min.svg:/usr/local/searxng/searx/templates/simple/searxng-wordmark.min.svg:ro
+      - ./searxng/templates/simple/base.html:/usr/local/searxng/searx/templates/simple/base.html:ro
+      - ./searxng/templates/simple/index.html:/usr/local/searxng/searx/templates/simple/index.html:ro
+      - ./searxng/templates/simple/search.html:/usr/local/searxng/searx/templates/simple/search.html:ro
       - searxng-data:/var/cache/searxng
     environment:
       - SEARXNG_BASE_URL=http://localhost:8081/
