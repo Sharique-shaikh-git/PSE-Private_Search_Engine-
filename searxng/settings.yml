@@ -1,5 +1,5 @@
 # ============================================
-# PSE - Private Search Engine
+# PSE - PrivateEye
 # SearXNG Configuration
 # ============================================
 
@@ -9,7 +9,7 @@ use_default_settings: true
 # GENERAL SETTINGS
 # ============================================
 general:
-  instance_name: "PSE - Private Search Engine"
+  instance_name: "PrivateEye"
   privacypolicy_url: false
   donation_url: false
   contact_url: false
@@ -41,7 +41,7 @@ search:
 # SERVER SETTINGS
 # ============================================
 server:
-  base_url: http://localhost:8080/
+  base_url: http://localhost:8081/
   port: 8080
   bind_address: "0.0.0.0"
   secret_key: "085496e0f3262edfd5ff2473b3a17f792ae956b681e2938b3a710dbae526a21d"

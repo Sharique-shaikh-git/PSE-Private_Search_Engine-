@@ -1,23 +1,25 @@
-# PSE - Private Search Engine
+# PrivateEye — Private Search Engine
 
-A fully self-hosted, privacy-respecting meta search engine built with SearXNG, Docker, and Caddy.
+> *Your Search. Your Privacy. Your Control.*
 
-## Why This Project?
+A fully self-hosted, privacy-respecting meta search engine. Built for clients who demand **complete data ownership** — no tracking, no profiling, no third-party trust.
 
-Every search you make on Google, Bing, or DuckDuckGo is tracked, profiled, and sold to advertisers. This project gives you:
+## Why PrivateEye?
+
+Every search you make on Google, Bing, or DuckDuckGo is tracked, profiled, and sold to advertisers. PrivateEye gives you:
 
 - **Complete privacy** — no tracking, no profiling, no ads
 - **272+ search engines** — aggregates results from Google, Bing, Wikipedia, DuckDuckGo, and more
 - **Random profiles** — each search uses a new anonymous profile
 - **Self-hosted** — runs entirely on your machine, no cloud, no third-party trust
 - **Tor support** — route searches through Tor for maximum anonymity
-- **Proxy support** — use HTTP/SOCKS proxies for IP rotation
+- **Custom branding** — fully branded as your own solution
 
 ## Architecture
 
 ```
 ┌───────────────────────────────────────────────────────┐
-│                    Your Windows PC                     │
+│                    Your Machine                        │
 │                                                       │
 │  Browser → http://localhost:8080                      │
 │                                                       │
@@ -26,14 +28,14 @@ Every search you make on Google, Bing, or DuckDuckGo is tracked, profiled, and s
 │  │                                                 │  │
 │  │  ┌──────────┐    ┌──────────────┐              │  │
 │  │  │  Caddy   │───▶│   SearXNG    │              │  │
-│  │  │ (reverse │    │ (search UI   │              │  │
-│  │  │  proxy)  │    │  + engine)   │              │  │
+│  │  │ (reverse │    │ (PrivateEye  │              │  │
+│  │  │  proxy)  │    │  UI + Engine)│              │  │
 │  │  └──────────┘    └──────┬───────┘              │  │
 │  │                         │                       │  │
-│  │                    ┌────┴─────┐                 │  │
-│  │                    │ Valkey   │                 │  │
-│  │                    │ (cache)  │                 │  │
-│  │                    └──────────┘                 │  │
+│  │                    ┌────┴─────┐   ┌──────────┐ │  │
+│  │                    │ Valkey   │   │   Tor    │ │  │
+│  │                    │ (cache)  │   │ (proxy)  │ │  │
+│  │                    └──────────┘   └──────────┘ │  │
 │  └─────────────────────────────────────────────────┘  │
 └───────────────────────────────────────────────────────┘
           │
@@ -44,36 +46,23 @@ Every search you make on Google, Bing, or DuckDuckGo is tracked, profiled, and s
    └──────────┘ └──────────┘ └──────────┘ └──────────┘
 ```
 
-## How Privacy Is Protected
+## Privacy Features
 
-### 1. Random Search Profiles
-Every search creates a **new anonymous profile**. Search engines see a different user each time — they cannot build a profile about you.
+### How Privacy Is Protected
 
-### 2. No Cookies Sent to Engines
-SearXNG never sends cookies to external search engines. Each request is clean and isolated.
+| Layer | Protection | Effect |
+|-------|-----------|--------|
+| **Random Profiles** | New anonymous profile per search | Engines can't build a profile |
+| **No Cookies** | Cookies stripped from external requests | Clean, isolated requests |
+| **No Tracking** | No ads, no tracking content | Your data stays with you |
+| **Referrer Stripped** | Destination sites don't know your query | Browsing stays private |
+| **Tor Support** | Route through Tor network | IP completely hidden |
+| **Security Headers** | Caddy adds protection headers | XSS, sniffing, framing blocked |
 
-### 3. No Tracking or Ads
-Unlike Google or DuckDuckGo, SearXNG does not serve ads or tracking content. Your data stays with you.
+### Privacy Comparison
 
-### 4. Referrer Header Stripped
-When you click a result, the referrer header is removed — the destination website doesn't know what you searched for.
-
-### 5. IP Address Hidden (with Tor/Proxy)
-- **Without proxy**: Search engines see your local IP
-- **With Tor**: Your IP is completely hidden
-- **With proxy**: Search engines see the proxy's IP
-
-### 6. HTTP Security Headers
-The Caddy reverse proxy adds security headers:
-- `X-Content-Type-Options: nosniff`
-- `X-Frame-Options: DENY`
-- `Referrer-Policy: no-referrer`
-- `Permissions-Policy` (restrictive)
-
-## Privacy Comparison
-
-| Feature | Google | DuckDuckGo | PSE (Ours) |
-|---------|--------|------------|-------------|
+| Feature | Google | DuckDuckGo | PrivateEye |
+|---------|--------|------------|------------|
 | User tracking | Yes | Partial | **No** |
 | Profiling | Yes | Partial | **No** |
 | Ads | Yes | Yes | **No** |
@@ -89,224 +78,145 @@ The Caddy reverse proxy adds security headers:
 
 | Component | Purpose |
 |-----------|---------|
-| **SearXNG** | Meta search engine (aggregates 272+ engines) |
-| **Caddy** | Reverse proxy with automatic HTTPS |
-| **Valkey** | Redis-compatible cache for performance |
-| **Docker** | Containerization and orchestration |
-| **Docker Compose** | Multi-container management |
+| **SearXNG** | Meta search engine (272+ engines) |
+| **Caddy** | Reverse proxy with security headers |
+| **Valkey** | Redis-compatible cache |
+| **Tor** | Anonymous proxy (optional) |
+| **Docker Compose** | Container orchestration |
 
 ## Quick Start
 
 ### Prerequisites
 - Docker Desktop installed and running
-- Windows 10/11 with WSL2 enabled
+- Windows 10/11 with WSL2
 
-### Installation
+### Launch
 
 ```bash
-# 1. Clone or navigate to this project
-cd "D:\project\temp project\PSE ( Private_Search_Engine)"
+# 1. Navigate to project
+cd "PSE - Private_Search_Engine"
 
-# 2. Start all containers
+# 2. Start all services
 docker compose up -d
 
-# 3. Verify containers are running
-docker compose ps
-
-# 4. Open in browser
+# 3. Open in browser
 # http://localhost:8080
 ```
 
-### Management Commands
+### Management
 
 ```bash
-# Start the search engine
-docker compose up -d
-
-# Stop the search engine
-docker compose down
-
-# View logs
-docker compose logs -f core
-
-# Restart with fresh containers
-docker compose down && docker compose up -d
-
-# Access SearXNG shell (for troubleshooting)
-docker compose exec -it --user root core /bin/sh -l
-
-# Pull latest images
-docker compose pull && docker compose up -d
+docker compose up -d          # Start
+docker compose down           # Stop
+docker compose logs -f        # View logs
+docker compose ps             # Check status
+docker compose down -v        # Full reset
 ```
 
 ## Configuration
 
-### Main Config Files
+### Config Files
 
 | File | Purpose |
 |------|---------|
 | `docker-compose.yml` | Container orchestration |
 | `.env` | Environment variables (secret key) |
-| `searxng/settings.yml` | SearXNG configuration |
+| `searxng/settings.yml` | SearXNG configuration + branding |
+| `searxng/static/themes/simple/img/` | Custom logo & favicon |
 | `Caddyfile` | Reverse proxy config |
 
-### Enabling Tor (Maximum Privacy)
-
-1. Add Tor container to `docker-compose.yml`:
-```yaml
-  tor:
-    image: dperson/torproxy
-    restart: unless-stopped
-    ports:
-      - "9050:9050"
-    networks:
-      - searxng-network
-```
-
-2. Update `searxng/settings.yml`:
-```yaml
-outgoing:
-  using_tor_proxy: true
-  proxies:
-    all://:
-      - socks5://tor:9050
-```
-
-3. Enable Tor check plugin:
-```yaml
-plugins:
-  searx.plugins.tor_check.SXNGPlugin:
-    active: true
-```
-
-4. Restart: `docker compose down && docker compose up -d`
-
-### Enabling Proxy
+### Enable Tor (Maximum Privacy)
 
 In `searxng/settings.yml`, under `outgoing:`:
 ```yaml
 outgoing:
   proxies:
     all://:
-      - http://your-proxy:8080
-      - socks5://your-proxy:1080
+      - socks5://tor:9050
 ```
 
-### Changing Search Engines
+### Custom Branding
 
-In `searxng/settings.yml`, modify the `engines:` section:
-```yaml
-use_default_settings:
-  engines:
-    remove:
-      - google      # Remove Google
-    # or keep only specific engines:
-    # keep_only:
-    #   - duckduckgo
-    #   - wikipedia
+Logo and favicon are in:
+```
+searxng/static/themes/simple/img/
+├── searxng.svg      (main logo)
+└── favicon.svg      (browser tab icon)
 ```
 
-### Changing Theme
-
-In `searxng/settings.yml`:
-```yaml
-ui:
-  default_theme: simple
-  theme_args:
-    simple_style: "dark"    # Options: auto, light, dark, black
-```
+Replace these SVG files to rebrand for any client.
 
 ### Built-in Plugins
 
 | Plugin | Description |
 |--------|-------------|
-| Calculator | Evaluate math expressions in search |
+| Calculator | Math expressions in search |
 | Hash Values | Compute hash values |
 | Self-Info | Check what sites know about you |
 | Tracker URL Remover | Strip tracking parameters |
-| Unit Converter | Convert units in search |
-| Hostnames | Custom hostname rules |
+| Unit Converter | Convert units |
 | Tor Check | Detect Tor connections |
 | Infinite Scroll | Lazy-load results |
-| OA DOI Rewrite | Academic paper DOI links |
 
-## Built-in Features
+## API
 
-### Search API (JSON)
 ```bash
+# JSON
 curl "http://localhost:8080/search?q=test&format=json"
-```
 
-### Search API (RSS)
-```bash
+# RSS
 curl "http://localhost:8080/search?q=test&format=rss"
+
+# Stats
+# http://localhost:8080/stats
+
+# Preferences
+# http://localhost:8080/preferences
 ```
-
-### Stats Page
-Visit `http://localhost:8080/stats` to see search statistics.
-
-### Preferences
-Visit `http://localhost:8080/preferences` to customize your search experience.
 
 ## Resume Talking Points
 
 ### Technical Skills Demonstrated
 - **Docker**: Multi-container orchestration with Compose
 - **Networking**: Reverse proxy, port mapping, proxy chains
-- **Privacy**: Random profiles, no tracking, Tor integration
+- **Privacy Engineering**: Random profiles, no tracking, Tor integration
 - **Security**: HTTP headers, rate limiting, referrer policy
-- **YAML**: Configuration management
-- **Linux/CLI**: Container management and troubleshooting
+- **Configuration Management**: YAML, environment variables
+- **Infrastructure**: Self-hosted deployment
 
 ### Key Features for Interview
 1. **Meta-search aggregation**: Queries 272+ engines simultaneously
 2. **Privacy-first architecture**: Random profiles per search
 3. **Self-hosted**: Full data sovereignty
 4. **Proxy/Tor integration**: Multiple layers of anonymity
-5. **Plugin system**: Extensible architecture
+5. **Custom branding**: Client-ready white-label solution
 6. **API access**: JSON/RSS endpoints for integration
 
 ## Troubleshooting
 
-### Containers won't start
 ```bash
+# Containers won't start
+docker compose down -v && docker compose up -d
+
+# Port conflict
+# Change "8080:80" to "8081:80" in docker-compose.yml
+
+# Check engine connectivity
+docker compose exec searxng curl -s "https://google.com" | head -20
+
+# Full reset
 docker compose down -v
-docker compose up -d
-```
-
-### Port 8080 already in use
-Change the port in `docker-compose.yml`:
-```yaml
-ports:
-  - "8081:80"  # Change to 8081 or another port
-```
-
-### Search engines returning no results
-Check if SearXNG can reach external engines:
-```bash
-docker compose exec core curl -s "https://google.com" | head -20
-```
-
-### Reset everything
-```bash
-docker compose down -v
-rm -rf searxng/
-# Re-clone and reconfigure
+rm -rf searxng/static/
+# Reconfigure and restart
 ```
 
 ## License
 
-This project uses:
+Built on open-source foundations:
 - [SearXNG](https://github.com/searxng/searxng) — AGPL-3.0
 - [Caddy](https://github.com/caddyserver/caddy) — Apache-2.0
 - [Valkey](https://github.com/valkey-io/valkey) — BSD-3-Clause
 
-## Acknowledgments
-
-- [SearXNG Documentation](https://docs.searxng.org/)
-- [NetworkChuck Tutorial](https://youtube.com/@NetworkChuck)
-- The open-source privacy community
-
 ---
 
-**Built with privacy in mind. Your searches, your data, your control.**
+**PrivateEye** — Built for clients who take privacy seriously.

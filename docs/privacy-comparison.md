@@ -1,12 +1,12 @@
-# Privacy Comparison: PSE vs Google vs DuckDuckGo
+# Privacy Comparison: PrivateEye vs Google vs DuckDuckGo
 
 ## Overview
 
-This document compares the privacy features of our Private Search Engine (PSE) against major search providers.
+This document compares the privacy features of PrivateEye against major search providers.
 
 ## Feature Comparison
 
-| Feature | Google | DuckDuckGo | Bing | PSE (Ours) |
+| Feature | Google | DuckDuckGo | Bing | PrivateEye |
 |---------|--------|------------|------|-------------|
 | **User Tracking** | Yes (extensive) | Partial | Yes | **No** |
 | **Search Profiling** | Yes | Partial | Yes | **No** |
@@ -50,7 +50,7 @@ This document compares the privacy features of our Private Search Engine (PSE) a
 - No privacy-first features
 - Aggressive ad targeting
 
-### PSE (Private Search Engine)
+### PrivateEye
 - **Zero tracking**: No profiles, no cookies, no history
 - **Random profiles**: Each search appears to come from a different user
 - **No ads**: Never serves advertisements
@@ -64,7 +64,7 @@ This document compares the privacy features of our Private Search Engine (PSE) a
 
 ## Privacy Levels
 
-### Level 1: Basic (Default PSE)
+### Level 1: Basic (Default PrivateEye)
 - Random profiles per search
 - No cookies sent to engines
 - Referrer stripped
@@ -99,7 +99,7 @@ Google knows:
   - And much more...
 ```
 
-### With PSE
+### With PrivateEye
 ```
 Query: "best coffee shops"
 Search engines know:
@@ -110,7 +110,7 @@ Search engines know:
 
 ## Legal & Compliance
 
-PSE helps with:
+PrivateEye helps with:
 - **GDPR**: No personal data processing
 - **CCPA**: No data collection or sale
 - **HIPAA**: No PHI exposure through search
@@ -118,7 +118,7 @@ PSE helps with:
 
 ## Conclusion
 
-PSE provides the highest level of search privacy available:
+PrivateEye provides the highest level of search privacy available:
 1. No tracking
 2. No profiling
 3. No ads
@@ -126,4 +126,4 @@ PSE provides the highest level of search privacy available:
 5. Full control
 6. Open source transparency
 
-For maximum privacy, combine PSE with Tor and a VPN.
+For maximum privacy, combine PrivateEye with Tor and a VPN.

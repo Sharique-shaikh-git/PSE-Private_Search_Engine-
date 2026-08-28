@@ -1,9 +1,10 @@
+name: privateeye
 services:
   caddy:
     image: caddy:2
     restart: unless-stopped
     ports:
-      - "8080:80"
+      - "8081:80"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy_data:/data
@@ -16,9 +17,11 @@ services:
     restart: unless-stopped
     volumes:
       - ./searxng:/etc/searxng:rw
+      - ./searxng/static/themes/simple/img/searxng.svg:/usr/local/searxng/searx/static/themes/simple/img/searxng.svg:ro
+      - ./searxng/static/themes/simple/img/favicon.svg:/usr/local/searxng/searx/static/themes/simple/img/favicon.svg:ro
       - searxng-data:/var/cache/searxng
     environment:
-      - SEARXNG_BASE_URL=http://localhost:8080/
+      - SEARXNG_BASE_URL=http://localhost:8081/
       - SEARXNG_SECRET=${SEARXNG_SECRET}
     networks:
       - searxng-network
