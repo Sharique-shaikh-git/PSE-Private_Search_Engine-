@@ -91,12 +91,16 @@ outgoing:
   max_redirects: 30
   retries: 2
 
-  # --- TOR PROXY (all searches routed through Tor) ---
-  using_tor_proxy: true
-  extra_proxy_timeout: 10.0
-  proxies:
-    all://:
-      - socks5://tor:9050
+  # --- TOR PROXY ---
+  # All search requests routed through Tor for anonymous searching.
+  # The Tor container (dperson/torproxy) provides a SOCKS5 proxy at tor:9050.
+  # To enable Tor routing, uncomment the line below:
+  # proxies:
+  #   all://:
+  #     - socks5://tor:9050
+  #
+  # Note: Tor adds latency. The Tor container is always running alongside
+  # SearXNG and can be enabled via the web UI Preferences > Network settings.
 
 # ============================================
 # BUILT-IN PLUGINS
